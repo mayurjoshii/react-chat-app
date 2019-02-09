@@ -1,30 +1,15 @@
 import React from 'react'
+import Message from './Message'
 
-const DUMMY_DATA = [
-    {
-        senderId: 'perborgen',
-        text: 'Hey, how is it going?'
-    },
-    {
-        senderId: 'janedoe',
-        text: 'Great! How about you?'
-    },
-    {
-        senderId: 'perborgen',
-        text: 'Good to hear! I am great as well'
-    }
-]
-
+/*MessageList is used for the outer structure of message window. Message.js is 
+for each individual messages*/
 class MessageList extends React.Component {
     render() {
         return (
-            <div  className="message-list">
-                {DUMMY_DATA.map((message, index) => {
+            <div className="message-list">
+                {this.props.message.map((message) => {
                     return(
-                        <div key={index} className="message">
-                            <div className="message-username">{message.senderId}</div>
-                            <div className="message-text">{message.text}</div>
-                        </div>
+                        <Message key={message.id} username={message.senderId} text={message.text} />
                     )
                 }
                 )}
