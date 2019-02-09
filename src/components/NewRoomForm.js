@@ -35,7 +35,7 @@ class NewRoomForm extends React.Component {
                         type="text" 
                         placeholder="Enter new room name" 
                         required />
-                    <button onSubmit={this.handleSubmit} id="create-room-btn" type="submit">+</button>
+                    <button id="create-room-btn" type="submit">+</button>
             </form>
         </div>
         )

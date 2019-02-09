@@ -5,7 +5,6 @@ class SendMessageForm extends React.Component {
         super(props);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleTyping = this.handleTyping.bind(this);
 
         this.state = {
             message: ''
@@ -16,9 +15,6 @@ class SendMessageForm extends React.Component {
         this.setState({
             message: e.target.value
         });
-    }
-
-    handleTyping(){
         this.props.userTyping();
     }
 
@@ -38,7 +34,8 @@ class SendMessageForm extends React.Component {
                 onSubmit={this.handleSubmit} 
                 className="send-message-form">
                 <input
-                    onChange={(e) => { this.handleChange(e); this.handleTyping()}}
+                    disabled={this.props.disabled}
+                    onChange={this.handleChange}
                     value={this.state.message}
                     placeholder="Type your message here..."
                     type="text" />

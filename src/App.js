@@ -8,7 +8,6 @@ import './App.css';
 import { ChatManager, TokenProvider } from '@pusher/chatkit-client'
 
 class App extends Component {
-
   constructor(props){
     super(props);
 
@@ -22,7 +21,8 @@ class App extends Component {
       messages: [],
       joinableRooms: [],
       joinedRooms: [],
-      roomId: null
+      roomId: '',
+      roomName: '',
 
     }
   }
@@ -69,7 +69,8 @@ class App extends Component {
     })
     .then(room => {
       this.setState({
-        roomId: room.id
+        roomId: room.id,
+        roomName: room.name
       });
       this.getRooms();
     })
@@ -108,7 +109,7 @@ class App extends Component {
   userTyping(){
     this.currentUser.isTypingIn({roomId: this.state.roomId})
       .then(() => {
-        console.log(`User is typing in ${this.state.roomId}`);
+        console.log(`User is typing in ${this.state.roomName}`);
       })
       .catch(err => {
         console.log('Error in typing ',err);
@@ -121,24 +122,30 @@ class App extends Component {
       addUserIds: ['Mayur'] 
     })
     .then(room => {
-      console.log('Room is created ',room.name);
+      console.log('Room is created-',room.name);
+      this.subscribeToRoom(room.id);
       this.getRooms();
     })
     .catch(err => {
-      console.log('Error in room creation ',err);
+      console.log('Error in room creation-',err);
     })
   }
+
 
   render() {
     return (
       <div className="app">
-        <MessageList message={this.state.messages} />
-        <RoomList 
+        <MessageList
+            roomName={this.state.roomName} 
+            roomId={this.state.roomId}
+            message={this.state.messages} />
+        <RoomList
             roomId={this.state.roomId}
             subscribeToRoom={this.subscribeToRoom} 
             rooms={[...this.state.joinedRooms, ...this.state.joinableRooms]} />
         <NewRoomForm createNewRoom={this.createNewRoom} />
-        <SendMessageForm 
+        <SendMessageForm
+            disabled={!this.state.roomId}
             sendMessage={this.sendMessage} 
             userTyping={this.userTyping} />
       </div>

@@ -33,6 +33,13 @@ html, body {
         "n f f f f f";
 }
 
+
+.room-name > p{
+    margin-bottom: 0px;
+    font-size: 12px;
+    color: #999;
+}
+
 .new-room-form {
     grid-area: n;
 }
